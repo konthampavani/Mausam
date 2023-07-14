@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Mausam</title>
+	<link rel="stylesheet" type="text/css" href="style_G7.css">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="script_G7.js"></script>
+</head>
+<body>
+	<h1>Systems Lab :: Sensing Environmental Conditions Using Cloud - Fog - Edge Infrastucture. </h1>
+	<h1>Group 7 welcomes you to systems lab , IIITA !!! </h1>
+	
+	
+	<div class="clock">
+	    <div class="time"></div>
+	    <div class="date"></div>
+	</div>
+  
+	<h2>See all the entries of the database : </h2>
+	<button id="show-data-btn" onclick="showFunction()">Show All Data</button>
+	
+	<div id="data-table-container" style="display: none;">
+		<table id="data-table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Node ID</th>
+					<th>Device Type</th>
+					<th>Temperature</th>
+					<th>Humidity</th>
+					<th>Date</th>
+					<th>Time</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+	</div>
+	
+	<div class="container">
+		<div class="card">
+			<h2>Current Temperature</h2>
+			<p id="curr_temp"></p>
+		</div>
+		<div class="card">
+			<h2>Average Temperature</h2>
+			<p id="avg_temp"></p>
+		</div>
+		<div class="card">
+			<h2>Current Humidity</h2>
+			<p id="current_hmd"></p>
+		</div>
+		<div class="card">
+			<h2>Average Humidity</h2>
+			<p id="avg_hmd"></p>
+		</div>
+	</div>
+	
+	<div>
+	    <h1 class="shw">Show Temperature</h1>
+	   <form id="frm">
+            <span class="input">
+                <span class="startdate">
+                    <label for="start-date">Start Date:</label>
+                    <input type="date" id="start-date" name="start-date" required>
+                </span>
+                <span class="enddate">
+                    <label for="end-date">End Date:</label>
+                    <input type="date" id="end-date" name="end-date" required>
+                </span>
+            </span>
+            <br>
+            <span class="input">
+                <span class="starttime">
+                    <label for="start-time">Start Time:</label>
+                    <input type="time" id="start-time" name="start-time" required step="3600">
+                </span>
+                <span class="endtime">
+                    <label for="end-time">End Time:</label>
+                    <input type="time" id="end-time" name="end-time" required step="3600">
+                </span>
+            </span>
+            <br>
+            <button class="show" id="temperature-btn" onclick="showFunction()">Show Data</button>
+            
+          </form>
+	  <div id="temperature-results"></div>
+	  
+	  <div id="temp-table-container" style="display: none;">
+		<table id="temp-table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Temperature</th>
+					<th>Humidity</th>
+					<th>Date</th>
+					<th>Time</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+	</div>
+	</div>
+	
+<script>
+	//function take_value(){
+	//	document.getElementById("frm").submit();
+	//	console.log(frm);
+	//}
+	function take_value() {
+	    var sd = document.getElementById("start-date").value;
+	    var ed = document.getElementById("end-date").value;
+	    var st = document.getElementById("start-time").value;
+	    var et = document.getElementById("end-time").value;
+	    console.log(sd);
+	    console.log(ed);
+	    console.log(st);
+	    console.log(et);
+	}
+
+        function take_values() {
+	    var sd = document.getElementById("start-date").value;
+	    var ed = document.getElementById("end-date").value;
+	    var st = document.getElementById("start-time").value;
+	    var et = document.getElementById("end-time").value;
+	    $.ajax({
+		url: 'http://localhost:9007/show_tmp',
+		type: 'GET',
+		data: {
+		    start_date: sd,
+		    end_date: ed,
+		    start_time: st,
+		    end_time: et
+		},
+		success: function(response) {
+		    // do something with the response, such as display the data in a table
+		    console.log(response);
+		},
+		error: function(error) {
+		    console.log(error);
+		}
+	    });
+	}
+
+</script>
+
+
+</body>
+</html>
+
